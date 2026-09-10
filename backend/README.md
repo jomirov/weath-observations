@@ -2,7 +2,7 @@
 ### Запуск локального сервера
 ```powershell
 cd backend
-python -m venv .venv
+py -m venv .venv
 .venv/Scripts/activate
 python -m pip install -r requirements.txt
 uv run fastapi dev
