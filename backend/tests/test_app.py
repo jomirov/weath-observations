@@ -3,10 +3,8 @@ from ..dependencies import get_path
 from ..app import app
 from ..database.db import Sqlite3db
 from dotenv import load_dotenv
-import pytest
-from pathlib import Path
 
-load_dotenv(".env.example")
+load_dotenv(".env.test")
 
 client = TestClient(app)
 
