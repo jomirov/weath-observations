@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 from ..dependencies import get_path
 from ..app import app
 from ..database.db import Sqlite3db
+import sqlite3
 from dotenv import load_dotenv
 import pytest
 
@@ -15,8 +16,7 @@ def temp_path():
 @pytest.fixture(autouse=True)
 def db():
     app.dependency_overrides[get_path] = temp_path
-sqlite3db = Sqlite3db(temp_path())
-con = sqlite3db.connect()
+con = sqlite3.connect(temp_path(), check_same_thread=False)
 cur = con.cursor()
 
 def test_insert_valid_observation():
