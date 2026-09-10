@@ -3,6 +3,7 @@ from ..dependencies import get_path
 from ..app import app
 from ..database.db import Sqlite3db
 from dotenv import load_dotenv
+import pytest
 
 load_dotenv(".env.example")
 
@@ -11,10 +12,12 @@ client = TestClient(app)
 def temp_path():
     return "tests/test.db"
 
-app.dependency_overrides[get_path] = temp_path
-sqlite3db = Sqlite3db(temp_path())
-con = sqlite3db.connect()
-cur = con.cursor()
+@pytest.fixture(autouse=True)
+def db():
+    app.dependency_overrides[get_path] = temp_path
+    sqlite3db = Sqlite3db(temp_path())
+    con = sqlite3db.connect()
+    cur = con.cursor()
 
 def test_insert_valid_observation():
     res = client.post('/observations', 
