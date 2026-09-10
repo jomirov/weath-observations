@@ -15,9 +15,9 @@ def temp_path():
 @pytest.fixture(autouse=True)
 def db():
     app.dependency_overrides[get_path] = temp_path
-    sqlite3db = Sqlite3db(temp_path())
-    con = sqlite3db.connect()
-    cur = con.cursor()
+sqlite3db = Sqlite3db(temp_path())
+con = sqlite3db.connect()
+cur = con.cursor()
 
 def test_insert_valid_observation():
     res = client.post('/observations', 
