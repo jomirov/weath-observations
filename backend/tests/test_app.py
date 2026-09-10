@@ -2,21 +2,22 @@ from fastapi.testclient import TestClient
 from ..dependencies import get_path
 from ..app import app
 from ..database.db import Sqlite3db
-import sqlite3
 from dotenv import load_dotenv
 import pytest
+from pathlib import Path
 
 load_dotenv(".env.example")
 
 client = TestClient(app)
 
 def temp_path():
-    return "tests/test.db"
+    return "../backend/tests/test.db"
 
 @pytest.fixture(autouse=True)
 def db():
     app.dependency_overrides[get_path] = temp_path
-con = sqlite3.connect(temp_path(), check_same_thread=False)
+sqlite3db = Sqlite3db(temp_path())
+con = sqlite3db.connect()
 cur = con.cursor()
 
 def test_insert_valid_observation():
