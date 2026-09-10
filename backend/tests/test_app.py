@@ -13,9 +13,7 @@ client = TestClient(app)
 def temp_path():
     return "../backend/tests/test.db"
 
-@pytest.fixture(autouse=True)
-def db():
-    app.dependency_overrides[get_path] = temp_path
+app.dependency_overrides[get_path] = temp_path
 sqlite3db = Sqlite3db(temp_path())
 con = sqlite3db.connect()
 cur = con.cursor()

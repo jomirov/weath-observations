@@ -1,17 +1,41 @@
-## Цель
+## Инструкция по запуску приложения (PowerShell)
+### Запуск локального сервера
+```powershell
+cd backend
+python -m venv .venv
+.venv/Scripts/activate
+python -m pip install -r requirements.txt
+uv run fastapi dev
+```
+### Запросы серверу по токену
+POST-запрос на создание записи от имени пользователя-А
+```powershell
+curl http://localhost:8000/observations `
+-Method POST `
+-Headers @{"Content-Type"="application/json";"x-token"="TEST-TOKEN-A"} `
+-Body '{"city":"Almaty","temperature_C":20,"note":"Sunny"}'
+```
+GET-запрос на получение всех записей пользователя-А:
+```powershell
+curl http://localhost:8000/observations `
+-Method GET `
+-Headers @{"x-token"="TEST-TOKEN-A"}
+```
+GET-запрос на получение записи по ID
+```powershell
+curl http://localhost:8000/obseravations/1 `
+-Method GET `
+-Headers @{"x-token"="TEST-TOKEN-A"}
+```
+DELETE-запрос на удаление записи по ID
+```powershell
+curl http://localhost:8000/observations `
+-Method DELETE `
+-Headers @{"x-token"="TEST-TOKEN-A"}
+```
 
-Создание локального API для введения записей о погоде двух пользователей.
-
-- Таблица Observations (id, owner_id, city, temperature_C, note)
-- Реализация методов запроса POST, GET, GET by id, DELETE by id
-- Фиксированные уникальные токены для каждого пользователя (определение owner_id по токену)
-- Возврат ошибок при неверных данных (отсутствие токена, обращение к чужой записи)
-- Автоматизированное тестирование
-
-## План
-1. Создание окружения
-2. Создание таблицы observations (id, owner_id, city, temperature_C, note)
-3. Реализация методов запроса POST, GET, GET id, DELETE id.
-4. Заполнение и сохранение данных на базе
-5. Валидация и четыре тестовых сценария
-6. CI Github
+## Запуск тестов
+```powershell
+cd backend
+uv run pytest
+```
