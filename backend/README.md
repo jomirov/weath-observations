@@ -25,7 +25,7 @@ curl http://localhost:8000/observations `
 ```
 GET-запрос на получение записи по ID
 ```powershell
-curl http://localhost:8000/obseravations/1 `
+curl http://localhost:8000/observations/1 `
 -Method GET `
 -Headers @{"x-token"="TOKEN FROM ENV"}
 ```
