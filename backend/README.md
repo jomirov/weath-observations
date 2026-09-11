@@ -8,30 +8,32 @@ python -m pip install -r requirements.txt
 uv run fastapi dev
 ```
 ### Запросы серверу по токену
-POST-запрос на создание записи от имени пользователя-А
+Переименовка .env.example -> .env, установка токенов
+
+POST-запрос на создание записи от имени пользователя
 ```powershell
 curl http://localhost:8000/observations `
 -Method POST `
--Headers @{"Content-Type"="application/json";"x-token"="TEST-TOKEN-A"} `
+-Headers @{"Content-Type"="application/json";"x-token"="TOKEN FROM ENV"} `
 -Body '{"city":"Almaty","temperature_C":20,"note":"Sunny"}'
 ```
-GET-запрос на получение всех записей пользователя-А:
+GET-запрос на получение всех записей пользователя:
 ```powershell
 curl http://localhost:8000/observations `
 -Method GET `
--Headers @{"x-token"="TEST-TOKEN-A"}
+-Headers @{"x-token"="TOKEN FROM ENV"}
 ```
 GET-запрос на получение записи по ID
 ```powershell
 curl http://localhost:8000/obseravations/1 `
 -Method GET `
--Headers @{"x-token"="TEST-TOKEN-A"}
+-Headers @{"x-token"="TOKEN FROM ENV"}
 ```
 DELETE-запрос на удаление записи по ID
 ```powershell
 curl http://localhost:8000/observations `
 -Method DELETE `
--Headers @{"x-token"="TEST-TOKEN-A"}
+-Headers @{"x-token"="TOKEN FROM ENV"}
 ```
 
 ## Запуск тестов
